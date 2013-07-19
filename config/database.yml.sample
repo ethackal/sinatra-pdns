@@ -1,13 +1,13 @@
 development:
   adapter:  mysql
   host:     localhost
-  user:     user
+  username:     user
   password: password
   database: pdns
 
 production:
   adapter:  mysql
   host:     localhost
-  user:     user
+  username:     user
   password: password
   database: pdns
