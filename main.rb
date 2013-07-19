@@ -26,7 +26,16 @@ module PdnsManager
       self.log_query(file_name, args)
     end
 
-    def initialize(*args)
+    #def initialize(*args)
+    def initialize(options = {})
+      @default_nsserver = options.delete(:nsserver) || ''
+      @default_contact = options.delete(:contact) || ''
+      @default_refresh = options.delete(:refresh) || 28800
+      @default_retry = options.delete(:retry) || 7200
+      @default_expire = options.delete(:expire) || 604800
+      @default_ttl = options.delete(:ttl) || 300
+
+
       super
       db_connect
     end

@@ -32,14 +32,14 @@
       <div class="control-group ">
         <label class="control-label"> NS Server </label>
         <div class="controls spaced">
-          <input name='nsserver' type='text' value='ns-01.ig-1.net.' >
+          <input name='nsserver' type='text' value='<%= @default_nsserver %>' >
         </div>
       </div>
 
       <div class="control-group ">
         <label class="control-label"> Contact Mail </label>
         <div class="controls spaced">
-          <input name='mail' type='text' value='hostmaster.iguanesolutions.net.'>
+          <input name='mail' type='text' value='<%= @default_contact %>'>
         </div>
       </div>
 
@@ -53,25 +53,25 @@
       <div class="control-group ">
         <label class="control-label"> Refresh Time </label>
         <div class="controls spaced">
-          <input name='refresh' type='text' value='28800' >
+          <input name='refresh' type='text' value='<%= @default_refresh %>' >
         </div>
       </div>
       <div class="control-group ">
         <label class="control-label"> Retry Time </label>
         <div class="controls spaced">
-          <input name='retry' type='text' value='7200'>
+          <input name='retry' type='text' value='<%= @default_retry %>'>
         </div>
       </div>
       <div class="control-group ">
         <label class="control-label"> Expire </label>
         <div class="controls spaced">
-          <input name='explire' type='text' value='604800'>
+          <input name='expire' type='text' value='<%= @default_expire %>'>
         </div>
       </div>
       <div class="control-group ">
         <label class="control-label"> TTL </label>
         <div class="controls spaced">
-          <input name='ttl' type='text' value='300'>
+          <input name='ttl' type='text' value='<%= @default_ttl %>'>
         </div>
       </div>
     </fieldset>

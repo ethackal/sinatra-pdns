@@ -16,6 +16,9 @@
               Add Domain
             </a>
           </li>
+          <li class="">
+              user: <%= @user %>
+          </li>
         </ul>
       </div>
     </div>
@@ -26,9 +29,9 @@
             <tr>
               <th>Name</th>
               <th>Master</th>
-              <th>last_check</th>
               <th>type</th>
-              <th>notified_serial</th>
+              <th>last update</th>
+              <th>Author</th>
               <th></th>
             </tr>
           </thead>
@@ -37,9 +40,9 @@
             <tr>
               <td><a href='/list/<%= domain[:name]%>/'><%= domain[:name]%></a></td>
               <td><%= domain[:master]%></td>
-              <td><%= domain[:last_check]%></td>
               <td><%= domain[:type]%></td>
-              <td><%= domain[:notified_serial]%></td>
+              <td><%= domain[:last_update]%></td>
+              <td><%= domain[:update_by]%></td>
               <td><a href="/delete/dommain/<%= domain[:id] %>" class="btn btn btn-mini"><i class="icon-remove-circle"></i></a></td>
             </tr>
             <% end %>

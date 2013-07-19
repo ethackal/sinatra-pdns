@@ -19,3 +19,4 @@ config/database.yml
 *.bkp
 *.bck
 *.save
+pdns.yaml

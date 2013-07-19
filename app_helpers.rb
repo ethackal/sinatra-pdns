@@ -22,7 +22,7 @@ module AppHelpers
     r_soa.name = params['name']
     r_soa.type = 'SOA'
     r_soa.ttl = params['ttl']
-    r_soa.content = params['nsserver'] + ' ' + params['mail'] + ' ' + params['serial'] + ' ' + params['refresh'] + ' ' + params['retry'] + ' ' + params['explire'] + ' ' + params['ttl']
+    r_soa.content = params['nsserver'] + ' ' + params['mail'] + ' ' + params['serial'] + ' ' + params['refresh'] + ' ' + params['retry'] + ' ' + params['expire'] + ' ' + params['ttl']
     r_soa.prio = '0'
     r_soa.pop = 'any'
     r_soa.save

@@ -23,6 +23,8 @@
             <th>ttl</th>
             <th>prio</th>
             <th>pop</th>
+            <th>last update</th>
+            <th>Author</th>
             <th></th>        
           </tr>
         </thead>
@@ -35,6 +37,8 @@
             <td><%= record[:ttl]%></td>
             <td><%= record[:prio]%></td>
             <td><%= record[:pop]%></td>
+            <td><%= record[:last_update]%></td>
+            <td><%= record[:update_by]%></td>
   
               <td><a href="/delete/record/<%= @domain_id %>/<%= record[:id] %>" class="btn btn btn-mini"><i class="icon-remove-circle"></i></a></td>
             </tr>
