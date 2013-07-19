@@ -1,0 +1,10 @@
+#:username: admin
+#:password: secret
+:default:
+  :nsserver: 'ns-01.example.com'
+  :contact: "hostmaster.example.com."
+  :refresh: 28800
+  :retry: 7200
+  :explire: 604800
+  :ttl: 300
+
