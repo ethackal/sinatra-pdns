@@ -16,9 +16,6 @@
               Add Domain
             </a>
           </li>
-          <li class="">
-              user: <%= @user %>
-          </li>
         </ul>
       </div>
     </div>
@@ -32,7 +29,7 @@
               <th>type</th>
               <th>last update</th>
               <th>Author</th>
-              <th></th>
+              <th class="sorter-false filter-false"> Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -43,7 +40,7 @@
               <td><%= domain[:type]%></td>
               <td><%= domain[:last_update]%></td>
               <td><%= domain[:update_by]%></td>
-              <td><a href="/delete/dommain/<%= domain[:id] %>" class="btn btn btn-mini"><i class="icon-remove-circle"></i></a></td>
+              <td><a href="/delete/dommain/<%= domain[:id] %>"><i class="icon-trash"></i></a></td>
             </tr>
             <% end %>
           <tbody>

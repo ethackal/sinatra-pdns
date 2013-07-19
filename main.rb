@@ -26,7 +26,6 @@ module PdnsManager
       self.log_query(file_name, args)
     end
 
-    #def initialize(*args)
     def initialize(options = {})
       @default_nsserver = options.delete(:nsserver) || ''
       @default_contact = options.delete(:contact) || ''

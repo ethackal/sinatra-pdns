@@ -25,7 +25,7 @@
             <th>pop</th>
             <th>last update</th>
             <th>Author</th>
-            <th></th>        
+            <th class="filter-false sorter-false"> Actions</th>      
           </tr>
         </thead>
         <tbody>
@@ -40,7 +40,7 @@
             <td><%= record[:last_update]%></td>
             <td><%= record[:update_by]%></td>
   
-              <td><a href="/delete/record/<%= @domain_id %>/<%= record[:id] %>" class="btn btn btn-mini"><i class="icon-remove-circle"></i></a></td>
+              <td><a href="/delete/record/<%= @domain_id %>/<%= record[:id] %>"><i class="icon-trash"></i></a></td>
             </tr>
             <% end %>
         </tbody>
