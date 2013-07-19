@@ -1,0 +1,61 @@
+ <form id="aliasform" class="form-horizontal" METHOD="POST" id='user_data' action="/add/record">
+  <fieldset>
+    <legend>Add New records: </legend>
+      <div class="control-group ">
+        <label class="control-label" > Name </label>
+        <div class="controls spaced">
+          <input name='name' type='text'>
+        </div>
+      </div>
+
+      <div class="control-group ">
+        <label class="control-label"> Type </label>
+          <div class="controls spaced">
+            <select name='type'>
+              <option value="A">A</option>
+              <option value="CNAME">CNAME</option>
+              <option value="MX">MX</option>
+              <option value="NS">NS</option>
+              <option value="RP">RP</option>
+              <option value="SOA">SOA</option>
+              <option value="TXT">TXT</option>
+            </select> 
+          </div>
+      </div>
+
+
+      <div class="control-group ">
+        <label class="control-label"> content </label>
+        <div class="controls spaced">
+          <input name='content' type='text'>
+        </div>
+      </div>
+
+      <div class="control-group ">
+        <label class="control-label"> Pop </label>
+          <div class="controls spaced">
+            <select name='pop'>
+              <option value="any" selected="selected" >ANY</option>
+              <option value="par">PAR</option>
+              <option value="nyc">NYC</option>
+              <option value="sgp">SGP</option>
+              <option value="syd">SYD</option>
+            </select> 
+          </div>
+      </div>
+
+      <div class="control-group ">
+        <label class="control-label"> ttl </label>
+        <div class="controls spaced">
+          <input name='ttl' type='text' value='300' >
+        </div>
+      </div>
+
+       <input type="hidden" name="domain_id" value="<%= @domain_id %>">
+
+      
+        
+         <button type="submit" class="btn">Submit</button>
+      
+    </fieldset>
+ </form>

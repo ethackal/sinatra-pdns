@@ -1,0 +1,79 @@
+ <form id="aliasform" class="form-horizontal" METHOD="POST" id='user_data' action="/add/domain">
+  <fieldset>
+    <legend>Add New domain: </legend>
+      <div class="control-group ">
+        <label class="control-label"> Name </label>
+        <div class="controls spaced">
+          <input name='name' type='text'>
+        </div>
+      </div>
+
+      <div class="control-group ">
+        <label class="control-label"> Master </label>
+        <div class="controls spaced">
+          <input name='master' type='text'>
+        </div>
+      </div>
+
+
+      <div class="control-group ">
+        <label class="control-label"> Type </label>
+        <div class="controls spaced">
+          <select name='type'>
+            <option value="NATIVE" selected="selected" >NATIVE</option>
+            <option value="MASTER" >MASTER</option>
+            <option value="SLAVE" >SLAVE</option>
+            <option value="SUPERSLAVE" >SUPERSLAVE</option>
+          </select> 
+        </div>
+      </div>
+
+    <legend>SOA Informations: </legend>
+      <div class="control-group ">
+        <label class="control-label"> NS Server </label>
+        <div class="controls spaced">
+          <input name='nsserver' type='text' value='ns-01.ig-1.net.' >
+        </div>
+      </div>
+
+      <div class="control-group ">
+        <label class="control-label"> Contact Mail </label>
+        <div class="controls spaced">
+          <input name='mail' type='text' value='hostmaster.iguanesolutions.net.'>
+        </div>
+      </div>
+
+      <div class="control-group ">
+        <label class="control-label"> Serial </label>
+        <div class="controls spaced">
+          <input name='serial' type='text' value='<%= @serial_date %>' >
+        </div>
+      </div>
+
+      <div class="control-group ">
+        <label class="control-label"> Refresh Time </label>
+        <div class="controls spaced">
+          <input name='refresh' type='text' value='28800' >
+        </div>
+      </div>
+      <div class="control-group ">
+        <label class="control-label"> Retry Time </label>
+        <div class="controls spaced">
+          <input name='retry' type='text' value='7200'>
+        </div>
+      </div>
+      <div class="control-group ">
+        <label class="control-label"> Expire </label>
+        <div class="controls spaced">
+          <input name='explire' type='text' value='604800'>
+        </div>
+      </div>
+      <div class="control-group ">
+        <label class="control-label"> TTL </label>
+        <div class="controls spaced">
+          <input name='ttl' type='text' value='300'>
+        </div>
+      </div>
+    </fieldset>
+    <button type="submit" class=" btn-info btn">Submit</button>
+ </form>
