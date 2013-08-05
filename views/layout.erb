@@ -72,7 +72,10 @@ $(function(){
   });
 });
 </script>
-
+<style>
+ table { table-layout: fixed; }
+ table th, table td { overflow: hidden; }
+</style>
       <title>pdns manager</title>
     </head>
     <body style="padding-top: 60px;">
@@ -80,9 +83,22 @@ $(function(){
    <div class="navbar navbar-fixed-top" style="z-index: 5;">
     <div class="topbar">
         <div class="navbar-inner">
-            <div class="container-fluid">
-                <a class="brand" href="/">PowerDNS Manager</a>
-            </div>
+          <div class="container-fluid">
+              <a class="brand" href="/">PowerDNS Manager</a>
+              <ul class="nav pull-right">
+                <li class="dropdown"> 
+                  <a class="dropdown-toggle" name="user" data-toggle="dropdown" href="">
+                    <i class="icon-user"></i>
+                    <%= session['user_name'] %>
+                  </a>
+                  <ul class="dropdown-menu">
+                      <li>
+                        <a href="/logout" name="logout" title="" class=""><i class="icon-off"></i>Logout</a>
+                  </li>
+                  </ul>
+                </li>
+              </ul>
+          </div>
         </div>
       </div>
     </div>

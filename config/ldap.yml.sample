@@ -1,0 +1,8 @@
+:host: ldap.example.com
+:port: 389
+:encryption: :start_tls
+:base: ou=user,dc=example,dc=com
+:password: secret
+:username_attribute: uid
+:displayname_attribute: displayname
+:can_search_anonymously: false

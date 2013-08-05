@@ -7,15 +7,62 @@ require 'date'
 require 'resolv'
 
 require_relative 'pdns_connect'
+require_relative 'ldap_authentication'
 require_relative 'app_helpers' 
 
 module PdnsManager
+#module LdapAuthentication
+  
+  class LoginScreen < Sinatra::Base
+    include LdapAuthentication
+    config = YAML.load_file(File.expand_path("../config/pdns.yaml", __FILE__))
+  
+    enable :sessions
+  
+      get '/login' do
+        if config[:auth_method] == 'ldap'
+          @login_msg = 'ldap account'
+        else
+          @login_msg = 'login'
+        end
+        erb :login
+      end
+  
+    post('/login') do
+      if config[:auth_method] == 'ldap'
+        login    = params[:login]
+        password = params[:password]        
+        @current_user = authenticate(login, password)
+        #@current_user = false
+        if @current_user
+          session['user_name'] = params[:login]
+          redirect '/'
+        else
+          redirect '/login'
+        end
+      elsif config[:auth_method] == 'simple'
+        if params[:login] == config[:username] && params[:password] == config[:password]
+          session['user_name'] = params[:login]
+          #puts "ok: #{session['user_name']} / #{@passwd}"
+          redirect '/'
+        else
+          redirect '/login'
+        end
+      else
+          redirect '/login'
+          @error = 'no auth method'
+      end
+    end
+  end
+
 
   class App < Sinatra::Base
+
     include PdnsConnect
+    #include LdapAuthentication
 
     dir = File.dirname(File.expand_path(__FILE__))
-    set :public, "#{dir}/public"
+    set :public_dir, "#{dir}/public"
     set :views, "#{dir}/views"
 
     #log:
@@ -27,6 +74,10 @@ module PdnsManager
     end
 
     def initialize(options = {})
+      #@auth_auth_method = auth_method
+      #@user = login
+      #@passwd = password
+
       @default_nsserver = options.delete(:nsserver) || ''
       @default_contact = options.delete(:contact) || ''
       @default_refresh = options.delete(:refresh) || 28800
@@ -35,7 +86,7 @@ module PdnsManager
       @default_ttl = options.delete(:ttl) || 300
 
 
-      super
+      super()
       db_connect
     end
 
@@ -53,6 +104,16 @@ module PdnsManager
 
     helpers AppHelpers
 
+    use LoginScreen
+
+    before do
+      unless session['user_name']
+        redirect '/login'
+        halt
+      end
+    end
+
+
     get '/' do
       if params[:searchdom]  
         @domains = Domains.where("name LIKE :dom", dom: "#{params[:searchdom]}%")
@@ -69,16 +130,16 @@ module PdnsManager
     end
 
     post '/add/domain' do
-      @errors = create_domain(params)
+      @error = create_domain(params)
       @domains = Domains.name_order
       erb :index
     end
 
    get '/delete/dommain/:domain_id' do
       #1st records
-      @errors = DnsRecord.where("domain_id = ?", params[:domain_id]).destroy_all
+      @error = DnsRecord.where("domain_id = ?", params[:domain_id]).destroy_all
       #2 domain
-      @errors = Domains.destroy(params[:domain_id])
+      @error = Domains.destroy(params[:domain_id])
       redirect to('/')
    end
 
@@ -96,7 +157,7 @@ module PdnsManager
     end
 
     post '/add/record' do
-      @errors = create_records(params)
+      @error = create_records(params)
       domain_id = params[:domain_id]
       domain_name = Domains.where(id: "#{domain_id}").pluck(:name)[0]
       redirect to("/list/#{domain_name}/")
@@ -104,7 +165,7 @@ module PdnsManager
 
    get '/delete/record/:domain_id/:record_id' do
       type = DnsRecord.where(id: "#{params[:record_id]}").pluck(:type)[0]
-      @errors = DnsRecord.destroy(params[:record_id])
+      @error = DnsRecord.destroy(params[:record_id])
       domain_name = Domains.where(id: "#{params[:domain_id]}").pluck(:name)[0]
       if type != 'SOA'
         increment_serial(params[:domain_id])
@@ -113,14 +174,14 @@ module PdnsManager
       redirect to("/list/#{domain_name}/")
    end
 
+    get '/logout' do
+      session.clear
+      redirect to("/")
+    end
 
     not_found do
       erb :"404"
     end
 
-    error do
-      @msg = "ERROR!!! " + env['sinatra.error'].name
-      erb :error
-    end
   end
 end

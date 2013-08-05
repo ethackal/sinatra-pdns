@@ -13,10 +13,12 @@ test/version_tmp
 tmp
 doc/
 *.log
-config/database.yml
 *.swp
 .DS_Store
 *.bkp
 *.bck
 *.save
 pdns.yaml
+ldap.yml
+database.yml
+pdns.yml

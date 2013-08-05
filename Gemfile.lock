@@ -24,6 +24,7 @@ GEM
     minitest (4.7.5)
     multi_json (1.7.7)
     mysql (2.9.1)
+    net-ldap (0.3.1)
     rack (1.5.2)
     rack-protection (1.5.0)
       rack
@@ -43,4 +44,5 @@ DEPENDENCIES
   activerecord
   logger
   mysql
+  net-ldap
   sinatra
