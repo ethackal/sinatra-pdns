@@ -123,7 +123,7 @@ module PdnsConnect
   end
 
   def connect_spec
-    YAML.load_file('config/database.yml')["#{ENV['RAILS_ENV']}"]
+    YAML.load_file('config/database.yml')["#{ENV['RACK_ENV']}"]
   end
 
   def execute(sql)
