@@ -1,11 +1,14 @@
 require 'net/ldap'
 require 'digest/md5'
 
-LDAP = YAML.load_file( File.expand_path('../config/ldap.yml', __FILE__) )
 
 
 module LdapAuthentication
-
+    
+    def included
+      @@ldap_config = @@ldap_config || YAML.load_file( File.expand_path('../config/ldap.yml', __FILE__) )
+    end
+    
     AUTH_TOKEN_SEED = 'AwesomeSuperSecureSecret'
 
     def authenticate(login, password)
@@ -14,7 +17,7 @@ module LdapAuthentication
       if authenticated_user
         {
           #:email => authenticated_user['mail'].first,
-          :name  => authenticated_user[LDAP[:displayname_attribute]].first,
+          :name  => authenticated_user[@@ldap_config[:displayname_attribute]].first,
           :token => Digest::MD5.hexdigest(AUTH_TOKEN_SEED + authenticated_user['cn'].first)
         }
       else
@@ -37,19 +40,19 @@ module LdapAuthentication
       authenticated_user ? authenticated_user.first : false
     end
 
-    # This is where LDAP jumps up and punches you in the face, all the while
+    # This is where @@ldap_config jumps up and punches you in the face, all the while
     # screaming "You never gunna get this, your wasting your time!".
     def args_for(username, password)
-      user_filter = "#{ LDAP[:username_attribute] }=#{ username }"
-      args        = { :base     => LDAP[:base],
+      user_filter = "#{ @@ldap_config[:username_attribute] }=#{ username }"
+      args        = { :base     => @@ldap_config[:base],
                       :filter   => "(#{ user_filter })",
                       :password => password }
 
-      unless LDAP[:can_search_anonymously]
-        # If you can't search your LDAP directory anonymously we'll try and
+      unless @@ldap_config[:can_search_anonymously]
+        # If you can't search your @@ldap_config directory anonymously we'll try and
         # authenticate you with your user dn before we try and search for your
         # account (dn example. `uid=clowder,ou=People,dc=mycompany,dc=com`).
-        user_dn = [user_filter, LDAP[:base]].join(',')
+        user_dn = [user_filter, @@ldap_config[:base]].join(',')
         args.merge({ :auth => { :username => user_dn, :password => password, :method => :simple } })
       end
 
@@ -57,20 +60,20 @@ module LdapAuthentication
     end
 
     def new_ldap_session_old
-      Net::LDAP.new(:host       => LDAP[:host],
-                    :port       => LDAP[:port],
-                    :encryption => LDAP[:encryption],
-                    :base       => LDAP[:base])
+      Net::LDAP.new(:host       => @@ldap_config[:host],
+                    :port       => @@ldap_config[:port],
+                    :encryption => @@ldap_config[:encryption],
+                    :base       => @@ldap_config[:base])
     end
 
     def new_ldap_session
-      Net::LDAP.new(:host       => LDAP[:host],
-                    :port       => LDAP[:port],
-                    :base       => LDAP[:base],
+      Net::LDAP.new(:host       => @@ldap_config[:host],
+                    :port       => @@ldap_config[:port],
+                    :base       => @@ldap_config[:base],
                     :auth => {
                         :method => :simple,
-                        :username => LDAP[:base],
-                        :password => LDAP[:password]
+                        :username => @@ldap_config[:base],
+                        :password => @@ldap_config[:password]
                     })
     end
 end

@@ -13,9 +13,9 @@ require_relative 'app_helpers'
 
 module PdnsManager
   class LoginScreen < Sinatra::Base
-    include LdapAuthentication
     config = YAML.load_file(File.expand_path("../config/pdns.yaml", __FILE__))
-  
+    include LdapAuthentication if config[:auth_method] == 'ldap'
+
     enable :sessions
   
       get '/login' do
