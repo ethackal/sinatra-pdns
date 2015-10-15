@@ -1,7 +1,7 @@
 development:
   adapter:  sqlite3 
-  dbfile:   db/pdns.sqlite3
+  database:   db/pdns.sqlite3
 
 production:
   adapter:  sqlite3
-  dbfile:   db/pdns.sqlite3s
+  database:   db/pdns.sqlite3s
