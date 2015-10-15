@@ -1,7 +1,7 @@
 #:auth_method: simple
 :auth_method: ldap
 :username: admin
-:password: secret
+:password: $2a$10$OYEhu0oZvbvmW4zQxsVSJO35sNyihG2RSsE9x10SLhk6tYYSPY4mK #BCrypt: secret 
 :default:
   :nsserver: 'ns-01.example.com'
   :contact: "hostmaster.example.com."

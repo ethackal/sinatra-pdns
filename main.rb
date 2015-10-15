@@ -5,14 +5,13 @@ require 'erb'
 require 'yaml'
 require 'date'
 require 'resolv'
+require 'bcrypt'
 
 require_relative 'pdns_connect'
 require_relative 'ldap_authentication'
 require_relative 'app_helpers' 
 
 module PdnsManager
-#module LdapAuthentication
-  
   class LoginScreen < Sinatra::Base
     include LdapAuthentication
     config = YAML.load_file(File.expand_path("../config/pdns.yaml", __FILE__))
@@ -41,7 +40,7 @@ module PdnsManager
           redirect '/login'
         end
       elsif config[:auth_method] == 'simple'
-        if params[:login] == config[:username] && params[:password] == config[:password]
+        if params[:login] == config[:username] && params[:password] == BCrypt::Password.new(config[:password])
           session['user_name'] = params[:login]
           #puts "ok: #{session['user_name']} / #{@passwd}"
           redirect '/'
