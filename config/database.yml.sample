@@ -1,13 +1,7 @@
 development:
-  adapter:  mysql
-  host:     localhost
-  username:     user
-  password: password
-  database: pdns
+  adapter:  sqlite3 
+  dbfile:   db/pdns.sqlite3
 
 production:
-  adapter:  mysql
-  host:     localhost
-  username:     user
-  password: password
-  database: pdns
+  adapter:  sqlite3
+  dbfile:   db/pdns.sqlite3s
