@@ -39,7 +39,7 @@ module PdnsManager
           redirect '/login'
         end
       elsif config[:auth_method] == 'simple'
-        if params[:login] == config[:username] && params[:password] == BCrypt::Password.new(config[:password])
+        if params[:login] == config[:username] && BCrypt::Password.new(config[:password]) == params[:password]
           session['user_name'] = params[:login]
           redirect '/'
         else
